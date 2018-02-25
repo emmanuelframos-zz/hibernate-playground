@@ -1,0 +1,39 @@
+plugins {
+    id "java"
+    id "org.springframework.boot" version "1.5.10.RELEASE"
+}
+
+repositories {
+    jcenter()
+}
+
+ext {
+    springBootVersion = "1.5.10.RELEASE"
+    h2Version = "1.4.196"
+    hikariVersion = "2.7.4"
+}
+
+jar {
+    baseName = "hibernate-playground"
+}
+
+dependencies {
+
+    /** Spring Boot Stack **/
+    compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    compile ("org.springframework.boot:spring-boot-starter-undertow:$springBootVersion"){
+        exclude group: 'io.undertow', module: 'undertow-websockets-jsr'
+    }
+    compile ("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"){
+        exclude module: 'tomcat-jdbc'
+    }
+    compile "org.springframework.boot:spring-boot-starter-logging:$springBootVersion"
+
+    /** Database **/
+    compile "com.zaxxer:HikariCP:$hikariVersion"
+    compile "com.h2database:h2:$h2Version"
+
+    /** Tests **/
+    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+
+}

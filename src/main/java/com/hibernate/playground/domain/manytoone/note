@@ -1,0 +1,8 @@
+When using a @ManyToOne association, the underlying foreign key is controlled by the child-side,
+no matter the association is unidirectional or bidirectional.
+
+Actually, the best-performing JPA associations always rely on the child-side to
+translate the JPA state to the foreign key column value.
+
+This is one of the most important rules in JPA relationship mapping, and it will be
+further emphasized for @OneToMany, @OneToOne and even @ManyToMany associations.

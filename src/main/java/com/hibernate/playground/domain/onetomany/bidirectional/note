@@ -1,0 +1,7 @@
+In a bidirectional association, only one side can control the underlying table relationship.
+
+For the bidirectional @OneToMany mapping, it is the child-side @ManyToOne association in charge of
+keeping the foreign key column.
+
+This is the reason why the bidirectional @OneToMany relationship must define the "mappedBy" attribute,
+indicating that it only mirrors the @ManyToOne child-side mapping.

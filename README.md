@@ -1,2 +1,2 @@
-# hibernate-playground
-Playground to explore High Performance with Hibernate
+# Hibernate Playground
+Playground to explore High Performance with Hibernate.
