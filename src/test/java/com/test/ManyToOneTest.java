@@ -1,48 +1,44 @@
 package com.test;
 
-import com.hibernate.playground.Application;
 import com.hibernate.playground.domain.manytoone.Brand;
 import com.hibernate.playground.domain.manytoone.Product;
-import com.hibernate.playground.repository.ProductRepository;
+import com.hibernate.playground.service.ProductService;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@SpringBootTest(classes = {Application.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@RunWith(SpringRunner.class)
-@Transactional
-public class ManyToOneTest {
+public class ManyToOneTest extends BaseTest {
+
+    private final Logger logger = LoggerFactory.getLogger(ManyToOneTest.class);
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @Test
     public void saveProductsForSameBrand(){
 
         /** Create Product One **/
-        Brand brand = new Brand("Dummy Brand One");
+        Brand brand = new Brand("Brand One");
 
-        Product product = new Product("Dummy Product One", brand);
+        Product product = new Product("Product One", brand);
 
-        product = productRepository.save(product);
+        product = productService.save(product);
 
         /** Fetch Brand **/
-        brand = productRepository.findOne(product.getId()).getBrand();
+        brand = productService.findOne(product.getId()).getBrand();
 
         /** Create Product Two **/
-        Product newProduct = new Product("Dummy Product Two", brand);
+        Product newProduct = new Product("Product Two", brand);
 
-        productRepository.save(newProduct);
+        productService.save(newProduct);
 
         /** Listing Products **/
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productService.findAll();
 
-        products.stream().forEach(System.out::println);
+        products.stream().forEach(p -> logger.info(p.toString()));
 
     }
 }

@@ -13,6 +13,9 @@ public class Brand {
     @Column(name = "name")
     private String name;
 
+    /** Avoid: No default constructor for entity. **/
+    private Brand(){ }
+
     public Brand(String name) {
         this.name = name;
     }

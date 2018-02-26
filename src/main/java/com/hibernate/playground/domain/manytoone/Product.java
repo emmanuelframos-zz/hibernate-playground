@@ -16,6 +16,9 @@ public class Product {
     @ManyToOne(cascade = CascadeType.ALL)
     private Brand brand;
 
+    /** Avoid: No default constructor for entity. **/
+    private Product(){}
+
     public Product(String name, Brand brand) {
         this.name = name;
         this.brand = brand;

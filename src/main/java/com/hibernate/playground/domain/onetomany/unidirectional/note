@@ -1,0 +1,20 @@
+Against any intuition, the unidirectional @OneToMany association does not map to a one-to-many
+table relationship.
+
+Because there is no @ManyToOne side to control this relationship, Hibernate
+uses a separate junction table to manage the association between a parent row and its child
+records.
+
+The unidirectional @OneToMany relationship is less efficient both for reading data (thre
+joins are required instead of two), as for adding (two tables must be written instea
+of one) or removing (entries are removed and added back again) child entries.
+
+Statements generated (@Transactional hidden this statements):
+
+Hibernate: insert into film (id, name) values (null, ?)
+Hibernate: insert into actor (id, name) values (null, ?)
+Hibernate: insert into actor (id, name) values (null, ?)
+Hibernate: insert into film_actors (film_id, actors_id) values (?, ?)
+Hibernate: insert into film_actors (film_id, actors_id) values (?, ?)
+Hibernate: delete from film_actors where film_id=? and actors_id=?
+Hibernate: delete from actor where id=?

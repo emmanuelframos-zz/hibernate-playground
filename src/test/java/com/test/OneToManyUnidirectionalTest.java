@@ -1,13 +1,37 @@
 package com.test;
 
-import com.hibernate.playground.Application;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
+import com.hibernate.playground.domain.onetomany.unidirectional.Actor;
+import com.hibernate.playground.domain.onetomany.unidirectional.Film;
+import com.hibernate.playground.service.FilmService;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@SpringBootTest(classes = {Application.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@RunWith(SpringRunner.class)
-@Transactional
-public class OneToManyUnidirectionalTest {
+public class OneToManyUnidirectionalTest extends BaseTest {
+
+    private final Logger logger = LoggerFactory.getLogger(OneToManyUnidirectionalTest.class);
+
+    @Autowired
+    private FilmService filmService;
+
+    @Test
+    public void saveFilmAndRemoveActorAfter(){
+        Actor actorOne = new Actor("Actor One");
+        Actor actorTwo = new Actor("Actor Two");
+
+        Film film = new Film("Film One");
+        film.addActor(actorOne).addActor(actorTwo);
+
+        filmService.save(film);
+
+        film = filmService.findOne(film.getId());
+
+        film.removeActor(film.getActors().iterator().next());
+
+        filmService.save(film);
+
+        logger.info(film.toString());
+
+    }
 }
