@@ -1,0 +1,12 @@
+The Order word is a reserved keyword, you have to escape it. See Order class: @Table(name="`order`").
+
+There is not much need for navigating this assocation from the Item relationship side
+(although we can still do it with a JPQL query).
+
+For @ManyToMany associations, CascadeType.REMOVE does not make too much sense when both
+sides represent independent entities. In this case, removing a Order entity should not trigger
+a Item removal because the Item can be referenced by other orders as well.
+
+For both unidirectional and bidirectional associations, it is better to avoid the
+CascadeType.REMOVE mapping. Instead of CascadeType.ALL, the cascade attributes should
+be declared explicitly (e.g. CascadeType.PERSIST, CascadeType.MERGE).

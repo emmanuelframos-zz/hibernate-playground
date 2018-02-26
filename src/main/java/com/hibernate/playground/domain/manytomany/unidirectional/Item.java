@@ -1,48 +1,49 @@
-package com.hibernate.playground.domain.onetoone;
+package com.hibernate.playground.domain.manytomany.unidirectional;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-public class Detail {
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "detail")
-    private String detail;
+    @Column(name="value")
+    private BigDecimal value;
 
     /** Avoid: No default constructor for entity. **/
-    private Detail(){}
+    private Item(){}
 
-    public Detail(String detail) {
-        this.detail = detail;
+    public Item(BigDecimal value) {
+        this.value = value;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getDetail() {
-        return detail;
+    public BigDecimal getValue() {
+        return value;
     }
 
     @Override
     public String toString() {
-        return String.format("Detail{id=%d, detail=%s}", id, detail);
+        return String.format("Item{id=%d, value=%f}", id, value);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Detail detail = (Detail) o;
-        return Objects.equals(detail, detail.detail);
+        Item item = (Item) o;
+        return Objects.equals(value, item.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(detail);
+        return Objects.hash(value);
     }
 }

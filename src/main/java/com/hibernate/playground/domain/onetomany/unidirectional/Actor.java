@@ -38,11 +38,11 @@ public class Actor {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Actor actor = (Actor) o;
-        return Objects.equals(id, actor.id) && Objects.equals(name, actor.name);
+        return Objects.equals(name, actor.name);
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hash(name);
     }
 }
