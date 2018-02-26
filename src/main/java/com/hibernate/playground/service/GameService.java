@@ -12,6 +12,11 @@ public class GameService {
     @Autowired
     private GameRepository gameRepository;
 
+    @Transactional(readOnly = true)
+    public Game findOne(Long id){
+        return gameRepository.findOne(id);
+    }
+
     @Transactional
     public Game save(Game game){
         return gameRepository.save(game);

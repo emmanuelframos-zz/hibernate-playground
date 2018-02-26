@@ -29,5 +29,11 @@ public class ManyToManyUnidirectional extends BaseTest {
 
         logger.info(order.toString());
 
+        order.removeItem(itemOne);
+
+        orderService.save(order);
+
+        logger.info(order.toString());
+
     }
 }

@@ -49,6 +49,11 @@ public class Order {
         return this;
     }
 
+    public Order removeItem(Item item){
+        this.items.remove(item);
+        return this;
+    }
+
     @Override
     public String toString() {
         return String.format("Order{id=%d, orderNumber=%s, items=%s}", id, orderNumber, items);

@@ -1,6 +1,6 @@
 The Order word is a reserved keyword, you have to escape it. See Order class: @Table(name="`order`").
 
-There is not much need for navigating this assocation from the Item relationship side
+There is not much need for navigating this association from the Item relationship side
 (although we can still do it with a JPQL query).
 
 For @ManyToMany associations, CascadeType.REMOVE does not make too much sense when both
@@ -10,3 +10,12 @@ a Item removal because the Item can be referenced by other orders as well.
 For both unidirectional and bidirectional associations, it is better to avoid the
 CascadeType.REMOVE mapping. Instead of CascadeType.ALL, the cascade attributes should
 be declared explicitly (e.g. CascadeType.PERSIST, CascadeType.MERGE).
+
+If we use List - Hibernate fetch data in PersistentBag - in the many side of ORM relation,
+while adding or removing an item from the list, hibernate issues a delete statement to delete all elements,
+and then issue insert statements to insert everything  back except the one removed.
+
+Then if we change the collection type to a Set - Hibernate fetch data in PersistentSet - only one delete
+or add statement is issued by itself.
+
+
