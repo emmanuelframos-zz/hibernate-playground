@@ -20,17 +20,23 @@ jar {
 dependencies {
 
     /** Spring Boot Stack **/
-    compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-    compile ("org.springframework.boot:spring-boot-starter-undertow:$springBootVersion"){
-        exclude group: 'io.undertow', module: 'undertow-websockets-jsr'
+    def springBootVersion = '1.5.9.RELEASE'
+    compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    compile "org.springframework.boot:spring-boot-starter-tomcat:${springBootVersion}"
+    compile "org.springframework.boot:spring-boot-starter-logging:${springBootVersion}"
+    compile "org.springframework.boot:spring-boot-starter-aop:${springBootVersion}"
+    compile ("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}") {
+        exclude group: 'org.apache.tomcat', module: 'tomcat-jdbc'
     }
-    compile ("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"){
-        exclude module: 'tomcat-jdbc'
-    }
-    compile "org.springframework.boot:spring-boot-starter-logging:$springBootVersion"
 
     /** Database **/
-    compile "com.zaxxer:HikariCP:$hikariVersion"
+    compile ("com.zaxxer:HikariCP:3.2.0") {
+        exclude group: 'org.hibernate', module: 'hibernate-core'
+    }
+    runtime('org.hibernate:hibernate-hikaricp:5.3.2.Final') {
+        exclude group: 'com.zaxxer', module: 'HikariCP'
+        exclude group: 'org.hibernate', module: 'hibernate-core'
+    }
     compile "com.h2database:h2:$h2Version"
 
     /** Tests **/
